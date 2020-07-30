@@ -1,19 +1,26 @@
 /**
 iconfont的symbol引用,不支持小程序
 i:图标名称
-eg: <svg-icon i="i-maoshan"></svg-icon>
+eg: <lj-icon i="i-maoshan"></lj-icon>
 纯H5应用开启在index.html添加<script src="./static/iconfont.js"></script>
  */
 <template>
-  <svg class="svg-icon"
-    aria-hidden="true">
-    <use :xlink:href="'#'+i"></use>
-  </svg>
+  <block>
+    <!-- #ifdef H5 -->
+    <svg class="lj-icon"
+      aria-hidden="true">
+      <use :xlink:href="'#'+i"></use>
+    </svg>
+    <!-- #endif -->
+    <!-- #ifndef H5 -->
+    <i class="i"
+      :class="i"></i>
+    <!-- #endif -->
+  </block>
 </template>
 
 <script>
 export default {
-  name: 'SvgIcon',
   props: {
     i: {
       type: String,
@@ -26,7 +33,7 @@ export default {
 </script>
 
 <style>
-.svg-icon {
+.lj-icon {
   width: 1em;
   height: 1em;
   vertical-align: -0.15em;
