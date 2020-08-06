@@ -8,13 +8,16 @@ eg: <lj-icon i="i-maoshan"></lj-icon>
   <block>
     <!-- #ifdef H5 -->
     <svg class="lj-icon"
+      :class="i"
       aria-hidden="true">
       <use :xlink:href="'#'+i"></use>
     </svg>
     <!-- #endif -->
     <!-- #ifndef H5 -->
-    <i class="i"
-      :class="i"></i>
+    <view>
+      <i class="i"
+        :class="i"></i>
+    </view>
     <!-- #endif -->
   </block>
 </template>
@@ -33,6 +36,9 @@ export default {
 </script>
 
 <style>
+/* #ifndef H5 */
+@import './iconfont.css';
+/* #endif */
 .lj-icon {
   width: 1em;
   height: 1em;
