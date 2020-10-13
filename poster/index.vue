@@ -23,15 +23,16 @@
     </div>
     <div class="poster-view slide-up-enter-active"
       :class="{'flex-center':!isTooHeight}"
-      v-if="showPoster">
+      v-if="showPoster"
+      @click.stop="closePoster">
       <div class="p-r"
         v-if="!isTooHeight">
         <div class="close flex-center"
           @click.stop="closePoster">
           &#215;
         </div>
-        <img :src="c.posterImg"
-          alt="" />
+        <image :src="c.posterImg"
+          alt=""></image>
         <div class="ta-c b-info">长按保存或发送给朋友吧！</div>
       </div>
       <block v-else>
@@ -39,11 +40,12 @@
           @click.stop="closePoster">
           &#215;
         </div>
-        <img :src="c.posterImg"
-          alt="" />
+        <image class="image-view"
+          :src="c.posterImg"
+          alt=""></image>
         <div class="ta-c b-info"
           :class="{fixed:isTooHeight}">
-          长按保存或发送给朋友吧！
+          长按保存或发送给朋友吧！!
         </div>
       </block>
     </div>
@@ -156,6 +158,7 @@ export default {
     right: 0;
     background-color: rgba(0, 0, 0, 0.3);
     border-radius: 1000px;
+    z-index: 2;
     &.fixed {
       position: fixed;
     }
