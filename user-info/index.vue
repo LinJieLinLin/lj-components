@@ -5,8 +5,9 @@
  * @Description:微信小程序获取用户信息组件
  name:按钮显示文字
  click: 返回用户信息
- eg: <lj-user-info @click="getUserInfo">
-    </lj-user-info>
+ eg:
+ <lj-user-info @click="getUserInfo">
+</lj-user-info>
 -->
 <template>
   <button class="btn-none"

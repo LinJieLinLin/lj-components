@@ -120,12 +120,15 @@ export default {
       }
     },
     change(argData) {
+      let isH5
       // #ifndef MP
-      this.c.show = argData.show
+      isH5 = true
       // #endif
-      // #ifdef MP
-      this.$emit('mixinChange', { key: this.c.key + '.show', data: argData.show })
-      // #endif
+      if (isH5) {
+        this.c.show = argData.show
+      } else {
+        this.$emit('mixinChange', { key: this.c.key + '.show', data: argData.show })
+      }
     },
     cancel(argData) {
       if (!this.c.cancelNoHide) {
