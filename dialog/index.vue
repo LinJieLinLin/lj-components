@@ -134,7 +134,6 @@ export default {
       if (!this.c.cancelNoHide) {
         this.change({ show: false })
       }
-      console.log(1)
       this.$emit('mixinChange', { fn: this.c.cancelFn })
     },
     confirm(argData) {
@@ -150,7 +149,7 @@ export default {
 <style scoped lang="scss">
 .modal {
   width: 270px;
-  background-color: #f1f1f1;
+  background-color: #fff;
   border-radius: 12px;
   font-size: 16px;
 }
