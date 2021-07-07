@@ -21,8 +21,8 @@
 
 <script>
 import { mapMutations } from 'vuex'
-import { setUserInfo } from '../../../api/common'
-import { getUserInfo, login } from '../../../utils/microApi'
+import { setUserInfo } from '@/api/common'
+import { getUserInfo, login } from 'lj-utils/microApi'
 export default {
   props: {
     name: {

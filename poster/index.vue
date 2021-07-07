@@ -57,7 +57,7 @@
 // #ifndef MP
 import html2canvas from "html2canvas";
 // #endif
-import { getSystemInfo, hideLoading, showLoading } from '@utils/microApi';
+import { getSystemInfo, hideLoading, showLoading } from 'lj-utils/microApi';
 export default {
   props: {
     c: {
