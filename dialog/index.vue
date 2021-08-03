@@ -80,7 +80,7 @@ changeFn: '改变时回调函数',
                   {{ c.confirmText || '确定' }}
                 </view>
                 <!-- #ifdef MP-WEIXIN -->
-                <lj-user-info v-else
+                <lj-user-info v-if="c.getUserInfo"
                   class="m-btn"
                   @click.native="confirm()"></lj-user-info>
                 <!-- #endif -->

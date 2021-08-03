@@ -10,19 +10,22 @@
 </lj-user-info>
 -->
 <template>
+  <!-- <view class=""> -->
   <button class="btn-none"
-    open-type="getUserInfo"
+    @click="checkUserInfo"
     @getuserinfo="checkUserInfo">
     <slot>
       {{ name||'确定' }}
     </slot>
   </button>
+  <!-- #ifdef MP-WEIXIN -->
+  <!-- #endif -->
+  <!-- </view> -->
 </template>
 
 <script>
-import { mapMutations } from 'vuex'
-import { setUserInfo } from '@/api/common'
-import { getUserInfo, login } from 'lj-utils/microApi'
+import { mapActions, mapMutations } from 'vuex'
+import { login, P } from 'lj-utils/microApi'
 export default {
   props: {
     name: {
@@ -54,19 +57,27 @@ export default {
     }
   },
   methods: {
-    ...mapMutations(['SetUserInfo']),
-    async checkUserInfo(rs) {
-      const userInfo = await getUserInfo(rs).catch(err => {
-        console.log(err)
+    ...mapActions(['UpdateUser']),
+    async checkUserInfo() {
+      let userInfo
+      // #ifdef MP-WEIXIN
+      userInfo = await P('getUserProfile', { desc: '数据展示' }).catch(err => {
+        console.error('checkUserInfo', err)
       })
+      // #endif
+      // #ifdef MP-ALIPAY
+      userInfo = await P('getUserInfo', { provider: 'alipay' }).catch(err => {
+        console.error('checkUserInfo', err)
+      })
+      // #endif
       console.info('userInfo:', userInfo)
-      if (userInfo.iv) {
-        this.SetUserInfo(userInfo.userInfo)
-        let res = await setUserInfo(userInfo.userInfo)
+      if (userInfo && userInfo.iv) {
+        let res = await this.UpdateUser(userInfo.userInfo)
         console.error('setUserInfo', res)
-        this.$emit('click')
+        this.$emit('click', true)
       } else {
         console.error('请先同意授权!')
+        this.$emit('click', false)
       }
       login(1)
     },
