@@ -2,7 +2,7 @@
   "name": "lj-components",
   "version": "0.0.4",
   "description": "lj uni-app components",
-  "main": "./dialog/index.js",
+  "main": "./dialog/mixin.js",
   "keywords": [
     "utils",
     "uni-app",

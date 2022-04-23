@@ -297,7 +297,7 @@ export default {
     }
   }
   .add-item {
-    @include iBorder1px(#8e8e93);
+    border: 1px solid #8e8e93
   }
   .move-item {
     opacity: 0.8;

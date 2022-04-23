@@ -5,9 +5,7 @@
  * @Description:
 -->
 <template>
-  <div class="item-list flex"
-    :class="{'disabled':item.disabled}"
-    @click="itemClick()">
+  <div class="item-list flex b-1px" :class="{ 'disabled': item.disabled }" @click="itemClick()">
     <slot name="header">
       <div class="flex0 text-l-1">
         <div>{{ item.name }}</div>
@@ -18,14 +16,13 @@
       </div>
     </slot>
     <slot name="footer">
-      <lj-icon i="i-arrow-right"
-        v-if="!c.hideArrow&&!item.hideArrow"
-        class="fs-20 flex0"></lj-icon>
+      <Icon i="i-arrow-right" v-if="!c.hideArrow && !item.hideArrow" class="fs-20 flex0"></Icon>
     </slot>
   </div>
 </template>
 
 <script>
+import Icon from '../../icon/index'
 export default {
   props: {
     item: {
@@ -42,7 +39,7 @@ export default {
     }
   },
   components: {
-
+    Icon
   },
   mounted() {
 
@@ -66,22 +63,23 @@ export default {
 </script>
 
 <style scoped lang="scss">
+$pdWidth: 16px;
+
 .item-list {
   position: relative;
-  padding-left: 16px;
-  padding-right: 16px;
+  padding-left: $pdWidth;
+  padding-right: $pdWidth;
   height: 44px;
   @include iFlex();
   @include iFlex(flex-middle);
   @include iBtnBgColor(#fff);
+  box-sizing: border-box;
+
   &::before {
     content: '';
-    height: 1px;
     position: absolute;
-    left: 10px;
-    right: 0;
-    top: -1px;
-    background-color: #eeebeb;
+    left: $pdWidth;
+    right: $pdWidth;
   }
 }
 </style>
