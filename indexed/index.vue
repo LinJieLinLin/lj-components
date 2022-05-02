@@ -15,48 +15,30 @@
  */
 -->
 <template>
-  <view class="lj-indexed-list"
-    ref="list"
-    id="list">
-    <scroll-view :scroll-into-view="scrollViewId"
-      class="lj-indexed-list__scroll"
-      scroll-y>
-      <view v-for="(items, idx) in lists"
-        :key="idx"
-        :id="'lj-indexed-list-' + idx">
-        <!-- {{ items.key }}
-        <div v-for="(item,index) in items.items"
-          :key="index">
-          {{ item.name }}
-        </div> -->
-        <lj-item-indexed :list="items"
-          :loaded="loaded"
-          :idx="idx"
-          :show-select="showSelect"
-          @itemClick="onClick"></lj-item-indexed>
+  <view class="lj-indexed-list" ref="list" id="list">
+    <scroll-view enable-back-to-top :scroll-into-view="scrollViewId" class="lj-indexed-list__scroll" scroll-y>
+      <view v-for="(items, idx) in lists" :key="idx" :id="'lj-indexed-list-' + idx">
+        <item-indexed v-if="loaded" :list="items" :loaded="loaded" :idx="idx" :show-select="showSelect"
+          @itemClick="onClick">
+        </item-indexed>
       </view>
     </scroll-view>
-    <view :class="touchmove ? 'lj-indexed-list__menu--active' : ''"
-      @touchstart="touchStart"
-      @touchmove.stop.prevent="touchMove"
-      @touchend="touchEnd"
+    <view @touchstart="touchStart" @touchmove.stop.prevent="touchMove" @touchend="touchEnd"
       class="lj-indexed-list__menu">
-      <view v-for="(item, key) in lists"
-        :key="key"
-        class="lj-indexed-list__menu-item">
+      <view v-for="(item, key) in lists" :key="key" class="lj-indexed-list__menu-item">
         <text class="lj-indexed-list__menu-text"
           :class="touchmoveIndex == key ? 'lj-indexed-list__menu-text--active' : ''">
           {{ item.key }}
         </text>
       </view>
     </view>
-    <view v-if="touchmove"
-      class="lj-indexed-list__alert-wrapper">
+    <view v-if="touchmove" class="lj-indexed-list__alert-wrapper">
       <text class="lj-indexed-list__alert">{{ lists[touchmoveIndex].key }}</text>
     </view>
   </view>
 </template>
 <script>
+import ItemIndexed from '../item/indexed'
 // #ifdef APP-PLUS
 function throttle(func, delay) {
   var prev = Date.now()
@@ -88,6 +70,7 @@ const throttleTouchMove = throttle(touchMove, 40)
 export default {
   name: 'LjIndexedList',
   components: {
+    ItemIndexed
   },
   props: {
     list: {
@@ -128,7 +111,7 @@ export default {
     }, 50)
     setTimeout(() => {
       this.loaded = true
-    }, 300)
+    }, 50)
   },
   methods: {
     setList() {
@@ -142,7 +125,7 @@ export default {
         let items = value.data.map(item => {
           let obj = {}
           obj.key = value.letter
-          obj.name = item
+          obj.name = item.name
           obj.itemIndex = index
           index++
           obj.checked = item.checked ? item.checked : false
@@ -192,7 +175,6 @@ export default {
     },
     touchEnd() {
       this.touchmove = false
-      this.touchmoveIndex = -1
     },
     onClick(e) {
       let {
