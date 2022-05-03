@@ -5,7 +5,7 @@
  * @Description:
 -->
 <template>
-  <div class="item-list flex b-1px" :class="{ 'disabled': item.disabled }" @click="itemClick()">
+  <div class="item-list flex b-1px" :class="{ 'disabled': item.disabled }">
     <slot name="header">
       <div class="flex0 text-l-1">
         <div>{{ item.name }}</div>
@@ -53,11 +53,11 @@ export default {
     }
   },
   methods: {
-    itemClick() {
-      if (!this.item.disabled) {
-        this.$emit('click', this.item)
-      }
-    }
+    // itemClick() {
+    //   if (!this.item.disabled) {
+    //     this.$emit('click', this.item)
+    //   }
+    // }
   },
 }
 </script>

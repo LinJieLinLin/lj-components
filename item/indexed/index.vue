@@ -11,8 +11,8 @@
           <view class="uni-indexed-list__item-border"
             :class="{ 'uni-indexed-list__item-border--last': index === list.items.length - 1 }">
             <view v-if="showSelect" style="margin-right: 20rpx;">
-              <uni-icons :type="item.checked ? 'checkbox-filled' : 'circle'" :color="item.checked ? '#007aff' : '#aaa'"
-                size="24" />
+              <!--ljTodo 2022-05-04 01:24:30 -->
+              <radio />
             </view>
             <text class="uni-indexed-list__item-content">{{ item.name }}</text>
           </view>

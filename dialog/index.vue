@@ -43,46 +43,31 @@ changeFn: '改变时回调函数',
 */
 -->
 <template>
-  <popup ref="popup"
-    type="center"
-    :show="c.show"
-    @change="change"
-    :mask-click="c.maskClose || false"
-    custom>
+  <popup ref="popup" type="center" :show="c.show" @change="change" :mask-click="c.maskClose || false" custom>
     <view @click.stop="clickModal">
       <slot>
         <view class="modal">
           <slot name="header">
-            <view class="m-header"
-              v-if="!c.hideHeader">
+            <view class="m-header" v-if="!c.hideHeader">
               {{ c.title }}
             </view>
           </slot>
           <slot name="body">
-            <view class="m-body"
-              v-if="!c.hideBody">
-              <div v-html="c.content"
-                class="w-b"></div>
+            <view class="m-body" v-if="!c.hideBody">
+              <div v-html="c.content" class="w-b"></div>
             </view>
           </slot>
           <slot name="footer">
-            <view class="m-footer"
-              v-if="!c.hideFooter">
-              <view class="m-btn"
-                v-if="!c.hideCancel"
-                @click.stop="cancel()">
+            <view class="m-footer" v-if="!c.hideFooter">
+              <view class="m-btn tab" v-if="!c.hideCancel" @click.stop="cancel()">
                 {{ c.cancelText || '取消' }}
               </view>
               <block v-if="!c.hideConfirm">
-                <view class="m-btn bg-theme tap"
-                  v-if="!c.getUserInfo"
-                  @click.stop="confirm()">
+                <view class="m-btn bg-theme tap" v-if="!c.getUserInfo" @click.stop="confirm()">
                   {{ c.confirmText || '确定' }}
                 </view>
                 <!-- #ifdef MP-WEIXIN -->
-                <lj-user-info v-if="c.getUserInfo"
-                  class="m-btn"
-                  @click.native="confirm()"></lj-user-info>
+                <lj-user-info v-if="c.getUserInfo" class="m-btn" @click.native="confirm()"></lj-user-info>
                 <!-- #endif -->
               </block>
             </view>
@@ -95,6 +80,7 @@ changeFn: '改变时回调函数',
 
 <script>
 import popup from './popup'
+import { IS_H5 } from 'lj-utils/microApi'
 export default {
   props: {
     c: {
@@ -120,11 +106,7 @@ export default {
       }
     },
     change(argData) {
-      let isH5
-      // #ifndef MP
-      isH5 = true
-      // #endif
-      if (isH5) {
+      if (IS_H5) {
         this.c.show = argData.show
       } else {
         this.$emit('mixinChange', { key: this.c.key + '.show', data: argData.show })
@@ -135,12 +117,14 @@ export default {
         this.change({ show: false })
       }
       this.$emit('mixinChange', { fn: this.c.cancelFn })
+      this.$emit('cancel')
     },
     confirm(argData) {
       if (!this.c.confirmNoHide) {
         this.change({ show: false })
       }
       this.$emit('mixinChange', { fn: this.c.confirmFn, data: argData })
+      this.$emit('confirm')
     },
   },
 }
@@ -153,26 +137,30 @@ export default {
   border-radius: 12px;
   font-size: 16px;
 }
+
 .m-header {
   padding-top: 20px;
   font-size: 18px;
   font-weight: bold;
   text-align: center;
 }
+
 .m-body {
   text-align: center;
   padding: 20px 15px;
   max-height: 70vh;
   overflow: auto;
 }
+
 .m-footer {
   height: 42px;
   display: flex;
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   overflow: hidden;
 }
+
 .m-btn {
   flex: 1;
   display: flex;
