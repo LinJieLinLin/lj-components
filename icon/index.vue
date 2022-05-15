@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div @click="itemClick">
     <!-- #ifdef H5 -->
     <svg class="lj-icon" :class="i" aria-hidden="true">
       <use :xlink:href="'#' + i"></use>
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+import { IS_H5 } from 'lj-utils/microApi'
 if (process.env.NODE_ENV === 'development') {
   // #ifdef H5
   import('./iconfont')
@@ -27,7 +28,12 @@ export default {
     }
   },
   computed: {
-  }
+  },
+  methods: {
+    itemClick() {
+      !IS_H5 && this.$emit('click', this.item)
+    }
+  },
 }
 </script>
 

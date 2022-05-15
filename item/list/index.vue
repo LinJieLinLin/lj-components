@@ -5,7 +5,7 @@
  * @Description:
 -->
 <template>
-  <div class="item-list flex b-1px" :class="{ 'disabled': item.disabled }">
+  <div class="item-list flex b-1px" :class="{ 'disabled': item.disabled }" @click="itemClick">
     <slot name="header">
       <div class="flex0 text-l-1">
         <div>{{ item.name }}</div>
@@ -23,6 +23,8 @@
 
 <script>
 import Icon from '../../icon/index'
+import { IS_H5 } from 'lj-utils/microApi'
+
 export default {
   props: {
     item: {
@@ -53,11 +55,11 @@ export default {
     }
   },
   methods: {
-    // itemClick() {
-    //   if (!this.item.disabled) {
-    //     this.$emit('click', this.item)
-    //   }
-    // }
+    itemClick() {
+      if (!this.item.disabled) {
+        !IS_H5 && this.$emit('click', this.item)
+      }
+    }
   },
 }
 </script>

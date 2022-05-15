@@ -17,10 +17,17 @@
 <template>
   <view class="lj-indexed-list" ref="list" id="list">
     <scroll-view enable-back-to-top :scroll-into-view="scrollViewId" class="lj-indexed-list__scroll" scroll-y>
-      <view v-for="(items, idx) in lists" :key="idx" :id="'lj-indexed-list-' + idx">
-        <item-indexed v-if="loaded" :list="items" :loaded="loaded" :idx="idx" :show-select="showSelect"
-          @itemClick="onClick">
-        </item-indexed>
+      <view v-for="(letter, idx) in lists" :key="idx" :id="'lj-indexed-list-' + idx">
+        <div v-if="letter.items.length">
+          <div class="pd-l10 pd-tb5">
+            {{ letter.key }}
+          </div>
+          <view v-for="(item, index) in letter.items" :key="index">
+            <slot :item="item" :index="index">
+              <list-item :item="item" :c="{ hideArrow: true }"></list-item>
+            </slot>
+          </view>
+        </div>
       </view>
     </scroll-view>
     <view @touchstart="touchStart" @touchmove.stop.prevent="touchMove" @touchend="touchEnd"
@@ -39,6 +46,7 @@
 </template>
 <script>
 import ItemIndexed from '../item/indexed'
+import ListItem from '../item/list/index'
 // #ifdef APP-PLUS
 function throttle(func, delay) {
   var prev = Date.now()
@@ -70,7 +78,8 @@ const throttleTouchMove = throttle(touchMove, 40)
 export default {
   name: 'LjIndexedList',
   components: {
-    ItemIndexed
+    ItemIndexed,
+    ListItem
   },
   props: {
     list: {
@@ -109,9 +118,6 @@ export default {
     setTimeout(() => {
       this.setList()
     }, 50)
-    setTimeout(() => {
-      this.loaded = true
-    }, 50)
   },
   methods: {
     setList() {
@@ -119,17 +125,17 @@ export default {
       this.lists = []
       this.list.forEach((value, index) => {
         if (value.data.length === 0) {
+          this.loaded = true
           return
         }
         let indexBefore = index
         let items = value.data.map(item => {
-          let obj = {}
-          obj.key = value.letter
-          obj.name = item.name
-          obj.itemIndex = index
+          item.key = value.letter
+          item.name = item.name
+          item.itemIndex = index
           index++
-          obj.checked = item.checked ? item.checked : false
-          return obj
+          item.checked = item.checked ? item.checked : false
+          return item
         })
         this.lists.push({
           title: value.letter,
@@ -147,6 +153,7 @@ export default {
           this.winHeight = ret[0].height
           this.itemHeight = this.winHeight / this.lists.length
         })
+      this.loaded = true
     },
     touchStart(e) {
       this.touchmove = true
