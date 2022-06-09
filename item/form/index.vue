@@ -38,9 +38,9 @@
     </block>
     <view class="flex1">
       <!-- 中间表单 -->
-      <lj-item-input :item="item"
+      <!-- <item-input :item="item"
         :c="c"
-        @change="formChange($event,item)"></lj-item-input>
+        @change="formChange($event,item)"></item-input> -->
     </view>
     <!-- 右边功能 -->
     <view class="flex0"
@@ -56,7 +56,7 @@
       <view class="flex0 pd-tb8 pd-l4 c-warn"
         @click="showTip(item)"
         v-if="item.tips">
-        <lj-icon i="i-help"></lj-icon>
+        <Icon i="i-help"></Icon>
       </view>
     </view>
     <div class="t-line"></div>
@@ -65,6 +65,9 @@
 
 <script>
 import { mapMutations } from 'vuex'
+import Icon from '../../icon/index'
+import ItemInput from '../input/index'
+
 export default {
   props: {
     item: {
@@ -81,6 +84,8 @@ export default {
     },
   },
   components: {
+    Icon,
+    ItemInput
   },
   mounted() {
     if (this.$f.safeData(this.item, 'extType')) {

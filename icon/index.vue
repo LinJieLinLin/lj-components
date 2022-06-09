@@ -4,6 +4,9 @@
     <svg class="lj-icon" :class="i" aria-hidden="true">
       <use :xlink:href="'#' + i"></use>
     </svg>
+    <view>
+      <i class="i" :class="i"></i>
+    </view>
     <!-- #endif -->
     <!-- #ifndef H5 -->
     <view>
@@ -15,11 +18,11 @@
 
 <script>
 import { IS_H5 } from 'lj-utils/microApi'
-if (process.env.NODE_ENV === 'development') {
-  // #ifdef H5
-  import('./iconfont')
-  // #endif
-}
+// if (process.env.NODE_ENV === 'development') {
+//   // #ifdef H5
+//   import('./iconfont.js')
+//   // #endif
+// }
 export default {
   props: {
     i: {
@@ -40,8 +43,8 @@ export default {
 <style>
 /* #ifndef H5 */
 @import './iconfont.css';
-
 /* #endif */
+@import './iconfont.css';
 .lj-icon {
   width: 1em;
   height: 1em;

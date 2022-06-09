@@ -13,6 +13,8 @@
   "license": "MIT",
   "private": false,
   "scripts": {
+    "i": "basic64Icon init",
+    "pull": "basic64Icon start",
     "test": "npm -v",
     "z": "echo '小改动' &&npm version patch",
     "y": "echo '特性更新' &&npm version minor",
@@ -20,9 +22,9 @@
     "push": "nrm use npm &npm login & npm publish & nrm use taobao"
   },
   "dependencies": {
+    "@ljtool/base64-icon": "^1.0.0",
     "lj-utils": "*"
   },
-  "devDependencies": {},
   "browserslist": [
     "> 1%",
     "last 2 versions",

@@ -61,22 +61,24 @@
       <view class="flex0 pd-tb8 pd-l4 c-info"
         @click="reset(item)"
         v-if="!item.hideReset&&item.value">
-        <lj-icon i="i-error"></lj-icon>
+        <icon i="i-error"></icon>
       </view>
       <view class="flex0 pd-tb8 pd-l4 c-info"
         v-if="item.type==='password'"
         @click="changeShowPwd">
-        <lj-icon v-if="showPwd"
-          i="i-openeye"></lj-icon>
-        <lj-icon v-if="!showPwd"
-          i="i-closeeye"></lj-icon>
+        <icon v-if="showPwd"
+          i="i-openeye"></icon>
+        <icon v-if="!showPwd"
+          i="i-closeeye"></icon>
       </view>
     </block>
   </div>
 </template>
 
 <script>
+import Icon from '../../icon/index'
 import { getSystemInfo } from 'lj-utils/microApi'
+
 export default {
   props: {
     item: {
@@ -93,7 +95,7 @@ export default {
     },
   },
   components: {
-
+    Icon
   },
   mounted() {
 
