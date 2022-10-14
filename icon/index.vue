@@ -4,9 +4,9 @@
     <svg class="lj-icon" :class="i" aria-hidden="true">
       <use :xlink:href="'#' + i"></use>
     </svg>
-    <view>
+    <!-- <view>
       <i class="i" :class="i"></i>
-    </view>
+    </view> -->
     <!-- #endif -->
     <!-- #ifndef H5 -->
     <view>
@@ -18,6 +18,7 @@
 
 <script>
 import { IS_H5 } from 'lj-utils/microApi'
+import { loadFile } from 'lj-utils'
 // if (process.env.NODE_ENV === 'development') {
 //   // #ifdef H5
 //   import('./iconfont.js')
@@ -27,15 +28,20 @@ export default {
   props: {
     i: {
       type: String,
-      required: true
-    }
+      required: true,
+    },
   },
-  computed: {
+  mounted() {
+    // #ifdef H5
+    // 在线iconfont处理,h5使用symbol引入
+    loadFile('https://at.alicdn.com/t/font_2120237_koq32h8ogj.js')
+    // #endif
   },
+  computed: {},
   methods: {
     itemClick() {
       !IS_H5 && this.$emit('click', this.item)
-    }
+    },
   },
 }
 </script>
@@ -44,7 +50,6 @@ export default {
 /* #ifndef H5 */
 @import './iconfont.css';
 /* #endif */
-@import './iconfont.css';
 .lj-icon {
   width: 1em;
   height: 1em;
