@@ -39,7 +39,7 @@ confirmFn: '点确定调用的函数',
 changeFn: '改变时回调函数',
  }, eg:
 <lj-dialog :c="DialogC" @mixinChange="ComChange">
-
+<lj-dialog :c="dialogC" @cancel="dialogC.cancelFn" @confirm="dialogC.confirmFn"></lj-dialog>
 */
 -->
 <template>
@@ -155,7 +155,7 @@ export default {
 .m-footer {
   height: 42px;
   display: flex;
-  box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.2);
+  box-shadow: 0px 0px 2px rgba(0, 0, 0, 0.2);
   border-bottom-left-radius: 12px;
   border-bottom-right-radius: 12px;
   overflow: hidden;

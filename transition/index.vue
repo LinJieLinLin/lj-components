@@ -5,12 +5,14 @@
  * @Description: fork uni-transition
 -->
 <template>
-  <view v-if="isShow"
+  <view
+    v-if="isShow"
     ref="ani"
     class="lj-transition"
     :class="[ani.in]"
-    :style="'transform:' +transform+';'+stylesObject"
-    @click="change">
+    :style="'transform:' + transform + ';' + stylesObject"
+    @click="change"
+  >
     <slot></slot>
   </view>
 </template>
@@ -21,14 +23,14 @@
  * @description 简单过渡动画组件
  * @tutorial https://ext.dcloud.net.cn/plugin?id=985
  * @property {Boolean} show = [false|true] 控制组件显示或隐藏
-   * @property {Array} modeClass = [fade|slide-top|slide-right|slide-bottom|slide-left|zoom-in|zoom-out] 过渡动画类型
-   *  @value fade 渐隐渐出过渡
-   *  @value slide-top 由上至下过渡
-   *  @value slide-right 由右至左过渡
-   *  @value slide-bottom 由下至上过渡
-   *  @value slide-left 由左至右过渡
-   *  @value zoom-in 由小到大过渡
-   *  @value zoom-out 由大到小过渡
+ * @property {Array} modeClass = [fade|slide-top|slide-right|slide-bottom|slide-left|zoom-in|zoom-out] 过渡动画类型
+ *  @value fade 渐隐渐出过渡
+ *  @value slide-top 由上至下过渡
+ *  @value slide-right 由右至左过渡
+ *  @value slide-bottom 由下至上过渡
+ *  @value slide-left 由左至右过渡
+ *  @value zoom-in 由小到大过渡
+ *  @value zoom-out 由大到小过渡
  * @property {Number} duration 过渡动画持续时间
  * @property {Object} styles 组件样式，同 css 样式，注意带’-‘连接符的属性需要使用小驼峰写法如：`backgroundColor:red`
  */
@@ -37,24 +39,24 @@ export default {
   props: {
     show: {
       type: Boolean,
-      default: false
+      default: false,
     },
     modeClass: {
       type: Array,
       default() {
         return []
-      }
+      },
     },
     duration: {
       type: Number,
-      default: 300
+      default: 300,
     },
     styles: {
       type: Object,
       default() {
         return {}
-      }
-    }
+      },
+    },
   },
   data() {
     return {
@@ -62,8 +64,8 @@ export default {
       transform: '',
       ani: {
         in: '',
-        active: ''
-      }
+        active: '',
+      },
     }
   },
   watch: {
@@ -75,14 +77,14 @@ export default {
           this.close()
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   computed: {
     stylesObject() {
       let styles = {
         ...this.styles,
-        'transition-duration': this.duration / 1000 + 's'
+        'transition-duration': this.duration / 1000 + 's',
       }
       let transfrom = ''
       for (let i in styles) {
@@ -90,14 +92,13 @@ export default {
         transfrom += line + ':' + styles[i] + ';'
       }
       return transfrom
-    }
+    },
   },
-  created() {
-  },
+  created() {},
   methods: {
     change() {
       this.$emit('click', {
-        detail: this.isShow
+        detail: this.isShow,
       })
     },
     open() {
@@ -105,11 +106,11 @@ export default {
       this.isShow = true
       this.transform = ''
       this.ani.in = ''
-      for (let i in this.getTranfrom(false)) {
+      for (let i in this.getTransform(false)) {
         if (i === 'opacity') {
           this.ani.in = 'fade-in'
         } else {
-          this.transform += `${this.getTranfrom(false)[i]} `
+          this.transform += `${this.getTransform(false)[i]} `
         }
       }
       this.$nextTick(() => {
@@ -123,7 +124,7 @@ export default {
       this._animation(false)
     },
     _animation(type) {
-      let styles = this.getTranfrom(type)
+      let styles = this.getTransform(type)
       this.transform = ''
       for (let i in styles) {
         if (i === 'opacity') {
@@ -137,13 +138,14 @@ export default {
           this.isShow = false
         }
         this.$emit('change', {
-          detail: this.isShow
+          detail: this.isShow,
         })
       }, this.duration)
     },
-    getTranfrom(type) {
+    getTransform(type) {
       let styles = {
-        transform: ''
+        transform: '',
+        opacity: '',
       }
       this.modeClass.forEach((mode) => {
         switch (mode) {
@@ -163,7 +165,7 @@ export default {
             styles.transform += `translateX(${type ? '0' : '-100%'}) `
             break
           case 'zoom-in':
-            styles.transform += `scale(${type ? 1 : 0.8}) `
+            styles.transform += `scale(${type ? 1 : 0.75}) `
             break
           case 'zoom-out':
             styles.transform += `scale(${type ? 1 : 1.2}) `
@@ -171,8 +173,8 @@ export default {
         }
       })
       return styles
-    }
-  }
+    },
+  },
 }
 </script>
 

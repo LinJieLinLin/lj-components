@@ -1,7 +1,19 @@
 <template>
   <view v-if="showPopup" class="uni-popup">
-    <ljTran :mode-class="['fade']" :styles="maskClass" :duration="duration" :show="showTrans" @click="onTap" />
-    <ljTran :mode-class="ani" :styles="transClass" :duration="duration" :show="showTrans" @click="onTap">
+    <ljTran
+      :mode-class="['fade']"
+      :styles="maskClass"
+      :duration="duration"
+      :show="showTrans"
+      @click="onTap"
+    />
+    <ljTran
+      :mode-class="ani"
+      :styles="transClass"
+      :duration="duration"
+      :show="showTrans"
+      @click="onTap"
+    >
       <view class="uni-popup__wrapper-box" @click.stop="clear">
         <slot />
       </view>
@@ -27,28 +39,28 @@ import ljTran from '../transition'
 export default {
   name: 'LjPopup',
   components: {
-    ljTran
+    ljTran,
   },
   props: {
     show: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 开启动画
     animation: {
       type: Boolean,
-      default: true
+      default: true,
     },
     // 弹出层类型，可选值，top: 顶部弹出层；bottom：底部弹出层；center：全屏弹出层
     type: {
       type: String,
-      default: 'center'
+      default: 'center',
     },
     // maskClick
     maskClick: {
       type: Boolean,
-      default: true
-    }
+      default: true,
+    },
   },
   data() {
     return {
@@ -57,18 +69,18 @@ export default {
       showPopup: false,
       showTrans: false,
       maskClass: {
-        'position': 'fixed',
-        'bottom': 0,
-        'top': 0,
-        'left': 0,
-        'right': 0,
-        'backgroundColor': 'rgba(0, 0, 0, 0.7)'
+        position: 'fixed',
+        bottom: 0,
+        top: 0,
+        left: 0,
+        right: 0,
+        backgroundColor: 'rgba(0, 0, 0, 0.7)',
       },
       transClass: {
-        'position': 'fixed',
-        'left': 0,
-        'right': 0,
-      }
+        position: 'fixed',
+        left: 0,
+        right: 0,
+      },
     }
   },
   watch: {
@@ -88,41 +100,40 @@ export default {
           case 'top':
             this.ani = ['slide-top']
             this.transClass = {
-              'position': 'fixed',
-              'left': 0,
-              'right': 0,
+              position: 'fixed',
+              left: 0,
+              right: 0,
             }
             break
           case 'bottom':
             this.ani = ['slide-bottom']
             this.transClass = {
-              'position': 'fixed',
-              'left': 0,
-              'right': 0,
-              'bottom': 0
+              position: 'fixed',
+              left: 0,
+              right: 0,
+              bottom: 0,
             }
             break
           case 'center':
-            this.ani = ['zoom-out', 'fade']
+            this.ani = ['zoom-in', 'fade']
             this.transClass = {
-              'position': 'fixed',
+              position: 'fixed',
               /* #ifndef APP-NVUE */
-              'display': 'flex',
-              'flexDirection': 'column',
+              display: 'flex',
+              flexDirection: 'column',
               /* #endif */
-              'bottom': 0,
-              'left': 0,
-              'right': 0,
-              'top': 0,
-              'justifyContent': 'center',
-              'alignItems': 'center'
+              bottom: 0,
+              left: 0,
+              right: 0,
+              top: 0,
+              justifyContent: 'center',
+              alignItems: 'center',
             }
-
             break
         }
       },
-      immediate: true
-    }
+      immediate: true,
+    },
   },
   created() {
     if (this.animation) {
@@ -145,7 +156,7 @@ export default {
         }, 50)
       })
       this.$emit('change', {
-        show: true
+        show: true,
       })
     },
     close(type) {
@@ -154,7 +165,7 @@ export default {
         clearTimeout(this.timer)
         this.timer = setTimeout(() => {
           this.$emit('change', {
-            show: false
+            show: false,
           })
           this.showPopup = false
         }, 300)
@@ -163,8 +174,8 @@ export default {
     onTap() {
       if (!this.maskClick) return
       this.close()
-    }
-  }
+    },
+  },
 }
 </script>
 <style lang="scss" scoped>
