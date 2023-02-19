@@ -1,12 +1,10 @@
 <template>
   <div @click="itemClick">
     <!-- #ifdef H5 -->
-    <svg class="lj-icon" :class="i" aria-hidden="true">
+    <!-- <svg class="lj-icon" :class="i" aria-hidden="true">
       <use :xlink:href="'#' + i"></use>
-    </svg>
-    <!-- <view>
-      <i class="i" :class="i"></i>
-    </view> -->
+    </svg> -->
+    <i class="i" :class="i"></i>
     <!-- #endif -->
     <!-- #ifndef H5 -->
     <view>
@@ -19,22 +17,21 @@
 <script>
 import { IS_H5 } from 'lj-utils/microApi'
 import { loadFile } from 'lj-utils'
-// if (process.env.NODE_ENV === 'development') {
-//   // #ifdef H5
-//   import('./iconfont.js')
-//   // #endif
-// }
 export default {
   props: {
     i: {
       type: String,
       required: true,
     },
+    // symbolUrl: {
+    //   type: String,
+    //   default: 'https://at.alicdn.com/t/c/font_2120237_p0vict17pzb.js',
+    // },
   },
   mounted() {
     // #ifdef H5
-    // 在线iconfont处理,h5使用symbol引入
-    loadFile('https://at.alicdn.com/t/font_2120237_koq32h8ogj.js')
+    // 在线iconfont处理,h5使用symbol引入,不需要@import './iconfont.css';
+    // loadFile(this.symbolUrl)
     // #endif
   },
   computed: {},
@@ -47,9 +44,7 @@ export default {
 </script>
 
 <style>
-/* #ifndef H5 */
 @import './iconfont.css';
-/* #endif */
 .lj-icon {
   width: 1em;
   height: 1em;
