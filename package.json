@@ -16,9 +16,10 @@
     "i": "base64Icon init",
     "pull": "base64Icon start",
     "test": "npm -v",
-    "z": "echo '小改动' &&npm version patch",
-    "y": "echo '特性更新' &&npm version minor",
-    "x": "echo '大改动' &&npm version major",
+    "z": "npm version patch && npm run p",
+    "y": "npm version minor && npm run p",
+    "x": "npm version major && npm run p",
+    "p": "./push.sh",
     "push": "nrm use npm &npm login & npm publish & nrm use taobao"
   },
   "dependencies": {
