@@ -1,6 +1,6 @@
 {
   "name": "lj-components",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "lj uni-app components",
   "main": "./dialog/mixin.js",
   "keywords": [
